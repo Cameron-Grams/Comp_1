@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Modal} from 'antd'
-
+import { securityCheckpointDelay } from '../util/checkpointAPI'; 
 import {airports, getDelays} from "../util/api"
 import {getViewport} from "../util/getViewport"
 import MapUS from "./MapUS"
@@ -35,18 +35,8 @@ class Dashboard extends Component {
             }
         });
 
-        delays.forEach( ( IATA ) => {
-            if ( airport[ IATA ] ){
-                const securityDelay = await securityCheckpointDelay( IATA );
-                airport[ IATA ].securityDelay = securityDelay;
-                if ( securityDelay > 15 ){
-                    const delaySignificance = securityDelay > 30 ? "css-longDelay": "css-middleDelay";
-                } else {
-                    const delaySignificance = "css-shortDelay"; 
-                }
-                airport[ IATA ].checkInDelay = delaySignificance; 
-            };
-        } );
+        const checkInStatusAirports = await securityCheckpointDelay( airports );
+
 
         const viewport = getViewport();
         const width = Math.min(viewport.width * .9, 1200);
@@ -64,10 +54,15 @@ class Dashboard extends Component {
         this.setState({showModal: false})
     };
 
+    respond = () => {
+        console.log( "In dash with summary: ", this.state.summary ); 
+    }
+
     render() {
         const {airports, viewportConfigs, summary} = this.state;
         return (
             <div className={'App'}>
+                <button onClick={ this.respond }>Respond</button> 
                 <Search
                     dataSource={Object.keys(airports)}
                     handleSelect={this.handleClick}

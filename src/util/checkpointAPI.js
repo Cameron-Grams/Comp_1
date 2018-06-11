@@ -1,13 +1,27 @@
-export async function securityCheckpointDelay( IATA ){
-    const response = await fetch(`https://apps.tsa.dhs.gov/MyTSAWebService/GetConfirmedWaitTimes.ashx?ap=${ IATA }&output=json`,
-        { headers: { 'Accept': 'application/json' } } );
-    const results = await response.json();
-    // this will depend on what values the TSA replies with for their delay estimates...
-    // a notional value of 5 was set as a default to permit continued development of the function without a reply from the TSA
-    if ( typeof results.wait === Number ){
-        return results.wait;
-    } else {
-        return 5; 
+export async function securityCheckpointDelay( airports ){
+    const newAirports = JSON.parse( JSON.stringify( airports ) );
+
+    console.log( "In checkpoint delay" );
+
+    const allAirports = Object.keys( airports );
+
+    for ( let i = 0; i < airports.length; i++ ){
+        let response = await fetch(`https://apps.tsa.dhs.gov/MyTSAWebService/GetConfirmedWaitTimes.ashx?ap=${ allAirports[ i ] }&output=json`,
+            { headers: { 'Accept': 'application/json' } } );
+        let results = await response.json();
+        newAirports[ allAirports[ i ] ].checkInDelay = results.wait;
+        newAirports[ allAirports[ i ] ].lengthDelay = howLongDelay( results.wait );
     }
 }; 
+
+function howLongDelay( lenghtWait ){ 
+    let delaySignificance;
+    if ( lenghtWait > 15 ){
+        delaySignificance = securityDelay > 30 ? "css-longDelay": "css-middleDelay";
+    } else {
+        delaySignificance = "css-shortDelay"; 
+    }
+    return delaySignificance; 
+};
+
 
