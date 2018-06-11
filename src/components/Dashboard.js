@@ -34,6 +34,20 @@ class Dashboard extends Component {
                 airports[IATA].delay = true;
             }
         });
+
+        delays.forEach( ( IATA ) => {
+            if ( airport[ IATA ] ){
+                const securityDelay = await securityCheckpointDelay( IATA );
+                airport[ IATA ].securityDelay = securityDelay;
+                if ( securityDelay > 15 ){
+                    const delaySignificance = securityDelay > 30 ? "css-longDelay": "css-middleDelay";
+                } else {
+                    const delaySignificance = "css-shortDelay"; 
+                }
+                airport[ IATA ].checkInDelay = delaySignificance; 
+            };
+        } );
+
         const viewport = getViewport();
         const width = Math.min(viewport.width * .9, 1200);
         const height = Math.min(viewport.height * .8, 600);
