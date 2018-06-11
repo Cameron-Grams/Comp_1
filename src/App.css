@@ -1,0 +1,21 @@
+@import '~antd/dist/antd.css';
+
+.App {
+    text-align: center;
+}
+
+.App-header {
+    background-color: #222;
+    height: 60px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.App-title {
+    color: white;
+    font-size: 1.5em;
+}
+
+.delay, p {
+    margin: 0
+}
