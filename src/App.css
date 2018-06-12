@@ -19,3 +19,15 @@
 .delay, p {
     margin: 0
 }
+
+.css-shortDelay{
+    color: green;
+}
+
+.css-middleDelay{
+    color: yellow;
+}
+
+.css-longDelay{
+    color: red;
+}

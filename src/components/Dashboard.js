@@ -6,6 +6,7 @@ import {getViewport} from "../util/getViewport"
 import MapUS from "./MapUS"
 import Search from './Search'
 import Summary from "./Summary"
+import '../App.css'; 
 
 const DEFAULT_AIRPORTS = airports;
 
@@ -35,15 +36,18 @@ class Dashboard extends Component {
             }
         });
 
-        const checkInStatusAirports = await securityCheckpointDelay( airports );
-
+        const checkInStatusAirports = securityCheckpointDelay( airports );
 
         const viewport = getViewport();
         const width = Math.min(viewport.width * .9, 1200);
         const height = Math.min(viewport.height * .8, 600);
         const zoom = viewport.width >= 600 ? 4.7 : (viewport.width / 600) * 4.7;
         const viewportConfigs = {height, width, zoom};
-        this.setState({airports, viewportConfigs, summary: delays})
+        this.setState({ 
+            airports: checkInStatusAirports, 
+            viewportConfigs, 
+            summary: delays
+        } )
     }
 
     handleClick = (airportCode) => {
@@ -55,7 +59,7 @@ class Dashboard extends Component {
     };
 
     respond = () => {
-        console.log( "In dash with summary: ", this.state.summary ); 
+        console.log( "In dash with summary: ", this.state.airports ); 
     }
 
     render() {
@@ -86,15 +90,22 @@ class Dashboard extends Component {
                         onCancel={this.closeModal}
                     >
                         {airports[this.state.details].delay
-                            ? airports[this.state.details].delays.map(({type, reason}, index) => {
+                            ? airports[this.state.details].delays.map(({type, reason }, index) => {
                                 return (
                                     <div key={index}>
                                         {type && <p>Type: {type}</p>}
                                         {reason && <p>Reason: {reason}</p>}
+                                        { this.state.airports[ this.state.details ].securityDelay && <p className={ this.state.airports[ this.state.details ].lengthDelay }>
+                                            Anticipated Screening Delay: { this.state.airports[ this.state.details ].securityDelay }</p> }
                                     </div>
                                 )
                             })
-                            : <p>No reported delays.</p>}
+                            : <div>
+                                <p>No reported delays.</p>
+                                { this.state.airports[ this.state.details ].securityDelay && <p className={ this.state.airports[ this.state.details ].lengthDelay }>
+                                Anticipated Screening Delay: { this.state.airports[ this.state.details ].securityDelay }</p> }
+                            </div> }
+
                     </Modal>
                     : null
                 }
