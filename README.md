@@ -1,6 +1,8 @@
 # Flight Delay Dashboard
-## Quickstart
-- (with NodeJS installed) install dependencies with `npm install`
-- Run `npm run start`
-- That's it!
-- A working example can be viewed on [heroku.](https://flight-delay-dashboard.herokuapp.com/)
+
+The anticipated checkin times for clearing security have been stubbed; the [TSA's Checkin Wait time API](
+    https://www.dhs.gov/mytsa-api-documentation
+) was not responding.  I emailed the TSA but still no love...
+
+
+Deployed, but having issues pm 11 June: [heroku.](https://arcane-ravine-69645.herokuapp.com/ )
