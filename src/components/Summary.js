@@ -12,8 +12,8 @@ const TabPane = Tabs.TabPane;
 function mapDelays(delay, index) {
     return (
         <Fragment key={index}>
-            {delay.type && <p className={'delay'}>Type: {delay.type}</p>}
-            {delay.reason && <p className={'delay'}>Reason: {delay.reason}</p>}
+            {delay.type && <p className={'delay'}>THIS Type: {delay.type}</p>}
+            {delay.reason && <p className={'delay'}> THIS Reason: {delay.reason}</p>}
         </Fragment>
     )
 }
@@ -45,6 +45,7 @@ export default class Summary extends Component {
                     <TabPane tab={IATA} key={index}>
                         {delays.map(mapDelays)}
                     </TabPane>
+                    
                 ))}
             </Tabs>
         )

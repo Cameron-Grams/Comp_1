@@ -36,15 +36,12 @@ class Dashboard extends Component {
             }
         });
 
-        const checkInStatusAirports = securityCheckpointDelay( airports );
-
         const viewport = getViewport();
         const width = Math.min(viewport.width * .9, 1200);
         const height = Math.min(viewport.height * .8, 600);
         const zoom = viewport.width >= 600 ? 4.7 : (viewport.width / 600) * 4.7;
         const viewportConfigs = {height, width, zoom};
         this.setState({ 
-            airports: checkInStatusAirports, 
             viewportConfigs, 
             summary: delays
         } )
@@ -58,10 +55,18 @@ class Dashboard extends Component {
         this.setState({showModal: false})
     };
 
+    respond = ( _locationObject, location ) => {
+        console.log( 'in respond', _locationObject );
+        securityCheckpointDelay( location );
+    }
+
      render() {
         const {airports, viewportConfigs, summary} = this.state;
         return (
             <div className={'App'}>
+
+                <button onClick={ () => this.respond( this.state.airports[ this.state.details ], this.state.details ) }>Resp</button>
+
                 <Search
                     dataSource={Object.keys(airports)}
                     handleSelect={this.handleClick}
@@ -91,14 +96,14 @@ class Dashboard extends Component {
                                         {type && <p>Type: {type}</p>}
                                         {reason && <p>Reason: {reason}</p>}
                                         { this.state.airports[ this.state.details ].securityDelay && <p className={ this.state.airports[ this.state.details ].lengthDelay }>
-                                            Anticipated Screening Delay: { this.state.airports[ this.state.details ].securityDelay }</p> }
+                                            TSA Screening Requires: { this.state.airports[ this.state.details ].securityDelay }</p> }
                                     </div>
                                 )
                             })
                             : <div>
                                 <p>No reported delays.</p>
                                 { this.state.airports[ this.state.details ].securityDelay && <p className={ this.state.airports[ this.state.details ].lengthDelay }>
-                                Anticipated Screening Delay: { this.state.airports[ this.state.details ].securityDelay }</p> }
+                                TSA Screening Requires: { this.state.airports[ this.state.details ].securityDelay }</p> }
                             </div> }
 
                     </Modal>
