@@ -1,8 +1,25 @@
 import Header from "antd/lib/calendar/Header";
+const xml = require( 'xml-parse' );
 
-export function securityCheckpointDelay( airport ){
-    const delayObject =  getAirportDelayData( airport );
-    return delayObject;
+
+export  async function securityCheckpointDelay( airport ){
+    const delayXML =  await getAirportDelayData( airport );
+    console.log( delayXML ); 
+
+    const parsedAirport = xml.parse( delayXML ); 
+    const waitTime = parsedAirport[ 1 ][ "childNodes" ][ 0 ][ "childNodes" ][ 1 ][ "innerXML" ];   
+
+    const reportedWait = waitTime === "0" ? "No delays reported": `Approximately ${ waitTime } minute delay`;
+    const lengthOfWait =   howLongDelay( waitTime );
+
+    const checkPointImpact = {
+        reportedWait: reportedWait,
+        lengthOfWait: lengthOfWait
+    };
+
+    console.log( checkPointImpact );
+
+    return parsedAirport;
 }; 
 
 function getAirportDelayData( airport ){
@@ -29,12 +46,9 @@ function getAirportDelayData( airport ){
         .then( res => {
             return res.text() 
          } )
-        .then( contents => console.log( contents ) )
+        .then( contents => contents )
         .catch( error => console.error('Error:', error ))
 };
-
-
-/*
 
 function howLongDelay( lenghtWait ){ 
     let delaySignificance;
@@ -45,12 +59,3 @@ function howLongDelay( lenghtWait ){
     }
     return delaySignificance; 
 };
-*/
-
-        /*
-        let response = await fetch(`https://apps.tsa.dhs.gov/MyTSAWebService/GetConfirmedWaitTimes.ashx?ap=${ allAirports[ i ] }&output=json`,
-            { headers: { 'Accept': 'application/json' } } );
-        let results = await response.json();
-        */
-
-//        Object.assign( newAirports[ allAirports[ i ] ], { "securityDelay": delayFromSecurityScreening, "lengthDelay": typeOfDelay })
