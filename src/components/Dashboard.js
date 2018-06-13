@@ -6,6 +6,7 @@ import {getViewport} from "../util/getViewport"
 import MapUS from "./MapUS"
 import Search from './Search'
 import Summary from "./Summary"
+import TSAScreeningEstimate from './TSAScreeningEstimate'; 
 import '../App.css'; 
 
 const DEFAULT_AIRPORTS = airports;
@@ -102,8 +103,7 @@ class Dashboard extends Component {
                             })
                             : <div>
                                 <p>No reported delays.</p>
-                                { this.state.airports[ this.state.details ].securityDelay && <p className={ this.state.airports[ this.state.details ].lengthDelay }>
-                                TSA Screening Requires: { this.state.airports[ this.state.details ].securityDelay }</p> }
+                                <TSAScreeningEstimate /> 
                             </div> }
 
                     </Modal>

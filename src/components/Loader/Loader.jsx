@@ -1,5 +1,5 @@
 import React from 'react';
-import './waiting.css'; 
+import './Loader.css'; 
 
 const Waiting = () => {
     return(
