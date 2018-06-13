@@ -58,15 +58,10 @@ class Dashboard extends Component {
         this.setState({showModal: false})
     };
 
-    respond = () => {
-        console.log( "In dash with summary: ", this.state.airports ); 
-    }
-
-    render() {
+     render() {
         const {airports, viewportConfigs, summary} = this.state;
         return (
             <div className={'App'}>
-                <button onClick={ this.respond }>Respond</button> 
                 <Search
                     dataSource={Object.keys(airports)}
                     handleSelect={this.handleClick}
