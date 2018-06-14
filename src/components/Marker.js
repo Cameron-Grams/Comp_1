@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-
+import Aux from '../util/Aux'; 
 import pin from '../img/pin.png'
 import pinRetina from '../img/pin@2x.png'
 import pinHover from '../img/pin-hover.png'
@@ -10,6 +10,8 @@ import delaysPinRetina from '../img/delaysPin@2x.png'
 import delaysPinHover from '../img/delaysPin-hover.png'
 import delaysPinHoverRetina from '../img/delaysPin-hover@2x.png'
 import {Popover} from "antd";
+import TSAScreeingEstimate from './TSAScreeningEstimate'; 
+
 
 const imageOffset = {
     left: 15,
@@ -107,7 +109,10 @@ export default class Marker extends Component {
             cursor: onClick ? 'pointer' : 'default'
         };
         const content = !delay
-            ? <p>No reported delays</p>
+            ? <Aux>
+                <p>No reported delays</p>
+                <TSAScreeingEstimate airportInitials={ airportCode } />
+            </Aux>
             : (<div>
                 {delays.map(({type, reason, avgDelay}, index) => {
                     return (
@@ -115,6 +120,7 @@ export default class Marker extends Component {
                             {type && <p>{`Type: ${type}`}</p>}
                             {reason && <p>{`Reason: ${reason}`}</p>}
                             {avgDelay && <p>{`Average Delay: ${avgDelay}`}</p>}
+                            <TSAScreeingEstimate airportInitials={ airportCode } />
                         </div>
                     )
                 })}
