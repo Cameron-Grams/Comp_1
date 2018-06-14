@@ -4,22 +4,16 @@ const xml = require( 'xml-parse' );
 
 export  async function securityCheckpointDelay( airport ){
     const delayXML =  await getAirportDelayData( airport );
-    console.log( delayXML ); 
-
     const parsedAirport = xml.parse( delayXML ); 
     const waitTime = parsedAirport[ 1 ][ "childNodes" ][ 0 ][ "childNodes" ][ 1 ][ "innerXML" ];   
-
     const reportedWait = waitTime === "0" ? "No delays reported": `Approximately ${ waitTime } minute delay`;
     const lengthOfWait =   howLongDelay( waitTime );
-
     const checkPointImpact = {
         reportedWait: reportedWait,
         lengthOfWait: lengthOfWait
     };
 
-    console.log( checkPointImpact );
-
-    return parsedAirport;
+    return checkPointImpact;
 }; 
 
 function getAirportDelayData( airport ){

@@ -96,14 +96,13 @@ class Dashboard extends Component {
                                     <div key={index}>
                                         {type && <p>Type: {type}</p>}
                                         {reason && <p>Reason: {reason}</p>}
-                                        { this.state.airports[ this.state.details ].securityDelay && <p className={ this.state.airports[ this.state.details ].lengthDelay }>
-                                            TSA Screening Requires: { this.state.airports[ this.state.details ].securityDelay }</p> }
+                                        <TSAScreeningEstimate airportInitials={ this.state.details } /> 
                                     </div>
                                 )
                             })
                             : <div>
                                 <p>No reported delays.</p>
-                                <TSAScreeningEstimate /> 
+                                <TSAScreeningEstimate airportInitials={ this.state.details } /> 
                             </div> }
 
                     </Modal>
