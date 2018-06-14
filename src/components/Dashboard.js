@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Modal} from 'antd'
-import { securityCheckpointDelay } from '../util/checkpointAPI'; 
 import {airports, getDelays} from "../util/api"
 import {getViewport} from "../util/getViewport"
 import MapUS from "./MapUS"
@@ -56,17 +55,10 @@ class Dashboard extends Component {
         this.setState({showModal: false})
     };
 
-    respond = ( _locationObject, location ) => {
-        console.log( 'in respond', _locationObject );
-        securityCheckpointDelay( location );
-    }
-
-     render() {
+    render() {
         const {airports, viewportConfigs, summary} = this.state;
         return (
             <div className={'App'}>
-
-                <button onClick={ () => this.respond( this.state.airports[ this.state.details ], this.state.details ) }>Resp</button>
 
                 <Search
                     dataSource={Object.keys(airports)}
