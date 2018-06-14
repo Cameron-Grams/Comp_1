@@ -36,7 +36,7 @@ function getAirportDelayData( airport ){
     const tryUrl = proxyUrl + endpoint; 
 
 
-    return fetch( tryUrl, headerSpecs )
+    return fetch( endpoint, headerSpecs )
         .then( res => {
             return res.text() 
          } )
