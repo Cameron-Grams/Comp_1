@@ -6,7 +6,7 @@ export  async function securityCheckpointDelay( airport ){
     const delayXML =  await getAirportDelayData( airport );
     const parsedAirport = xml.parse( delayXML ); 
     const waitTime = parsedAirport[ 1 ][ "childNodes" ][ 0 ][ "childNodes" ][ 1 ][ "innerXML" ];   
-    const reportedWait = waitTime === "0" ? "No delays reported": `Approximately ${ waitTime } minute delay`;
+    const reportedWait = waitTime === "0" ? "No reported delays": `Approximately ${ waitTime } minute delay`;
     const lengthOfWait =   howLongDelay( waitTime );
     const checkPointImpact = {
         reportedWait: reportedWait,
