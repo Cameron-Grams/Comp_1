@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Modal} from 'antd'
 import {airports, getDelays} from "../util/api"
+import { produceAllScreeningDelays } from '../util/checkpointAPI'; 
 import {getViewport} from "../util/getViewport"
 import MapUS from "./MapUS"
 import Search from './Search'
@@ -23,11 +24,12 @@ class Dashboard extends Component {
         summary: null,
         airports: airports,
         viewportConfigs: null,
-        dataSource: []
+        dataSource: [],
+        dataLoaded: false
     };
 
     async componentDidMount() {
-        const airports = DEFAULT_AIRPORTS;
+        const airports = await produceAllScreeningDelays( DEFAULT_AIRPORTS );
         const delays = await getDelays();
         delays.forEach(({IATA, delays}) => {
             if (airports[IATA]) {
@@ -42,6 +44,7 @@ class Dashboard extends Component {
         const zoom = viewport.width >= 600 ? 4.7 : (viewport.width / 600) * 4.7;
         const viewportConfigs = {height, width, zoom};
         this.setState({ 
+            dataLoaded: true,
             viewportConfigs, 
             summary: delays
         } )
@@ -80,21 +83,27 @@ class Dashboard extends Component {
                         visible={this.state.showModal}
                         title={`${airports[this.state.details].name}`}
                         onOk={this.closeModal}
-                        onCancel={this.closeModal}
-                    >
+                        onCancel={this.closeModal} >
+                       
                         {airports[this.state.details].delay
                             ? airports[this.state.details].delays.map(({type, reason }, index) => {
                                 return (
                                     <div key={index}>
                                         {type && <p>Type: {type}</p>}
                                         {reason && <p>Reason: {reason}</p>}
-                                        <TSAScreeningEstimate airportInitials={ this.state.details } /> 
+                                        <TSAScreeningEstimate 
+                                            dataLoaded={ this.state.dataLoaded } 
+                                            severityOfWait= { airports[ this.state.details].lengthOfWait }
+                                            durrationOfWait={ airports[ this.state.details].reportedWait } /> 
                                     </div>
                                 )
                             })
                             : <div>
                                 <p>No reported delays.</p>
-                                <TSAScreeningEstimate airportInitials={ this.state.details } /> 
+                                <TSAScreeningEstimate 
+                                    dataLoaded={ this.state.dataLoaded } 
+                                    severityOfWait= { airports[ this.state.details].lengthOfWait }
+                                    durrationOfWait={ airports[ this.state.details].reportedWait } /> 
                             </div> }
 
                     </Modal>
