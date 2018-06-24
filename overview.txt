@@ -1,5 +1,7 @@
 Hosted on Heroku:  https://arcane-ravine-69645.herokuapp.com/
 
+FREE SERVICES ON HEROKU FREQUENTLY REQUIRE AN INITIAL SCREEN REFRESH IF RUN LOCALLY
+
 Application Flow:
 1. The baseline FAA application was modified by adding the TSA Screening delay information on the
    'Dashboard' and 'Marker' components by rendering a <TSAScreeningEstimate /> component
