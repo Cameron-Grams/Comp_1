@@ -1,4 +1,5 @@
 import Header from "antd/lib/calendar/Header";
+import { SHORT_WAIT, MIDDLE_WAIT } from './config'; 
 const xml = require( 'xml-parse' );
 
 
@@ -46,8 +47,8 @@ function getAirportDelayData( airport ){
 
 function howLongDelay( lenghtWait ){ 
     let delaySignificance;
-    if ( lenghtWait > 15 ){
-        delaySignificance = lenghtWait > 30 ? "css-longDelay": "css-middleDelay";
+    if ( lenghtWait > SHORT_WAIT ){
+        delaySignificance = lenghtWait > MIDDLE_WAIT ? "css-longDelay": "css-middleDelay";
     } else {
         delaySignificance = "css-shortDelay"; 
     }
