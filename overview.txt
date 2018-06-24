@@ -1,0 +1,33 @@
+Hosted on Heroku:  https://arcane-ravine-69645.herokuapp.com/
+
+Application Flow:
+1. The baseline FAA application was modified by adding the TSA Screening delay information on the
+   'Dashboard' and 'Marker' components by rendering a <TSAScreeningEstimate /> component
+
+2. The <TSAScreeningEstimate /> takes one prop, the initials of the airport being highlighted as
+   recognized by "this.state.details" on the 'Dashboard' and passed down as an 'airport' object to
+   the 'Marker' component
+
+3. The <TSAScreeningEstimate /> component itself is stateful and reflects the loading of a data call
+   to the TSA endpoint 
+
+4. The TSA endpoint responds with XML and is managed by the checkpointAPI.js helper module
+
+5. The checkpointAPI.js helper module uses a proxy endpoint hosted on heroku to be able to process 
+   the TSA response in the browser.
+
+6. The response from the TSA server is managed as an object and evaluated by estimated length of time
+   and rendered with the appropriate color, as recognized by the variables defined in config.js, and
+   held on Heroku as environmental variables.  
+
+ 
+Significant Points:
+1. Free services and delay; 
+    - proxy endpoint on Heroku
+    - FAA information? 
+
+2. TSA Screening delay information and loading
+    - more current
+    - delay... 
+
+
