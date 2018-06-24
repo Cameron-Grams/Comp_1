@@ -10,7 +10,7 @@ This is accomplished by using a proxy endpoint on Heroku to render the informati
 To use this application locally;
 * clone the repository
 * enter "npm install" from the command line to load the node modules
-* enter "npm run start" to start the react development server on localhost://3000
+* enter "npm run start" to start the react development server on localhost:3000
 
 
 ![alt-text][screenshot]
