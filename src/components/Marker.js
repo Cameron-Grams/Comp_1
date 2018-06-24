@@ -120,10 +120,10 @@ export default class Marker extends Component {
                             {type && <p>{`Type: ${type}`}</p>}
                             {reason && <p>{`Reason: ${reason}`}</p>}
                             {avgDelay && <p>{`Average Delay: ${avgDelay}`}</p>}
-                            <TSAScreeingEstimate airportInitials={ airportCode } />
                         </div>
                     )
                 })}
+                <TSAScreeingEstimate airportInitials={ airportCode } />
             </div>);
 
         return (

@@ -83,20 +83,23 @@ class Dashboard extends Component {
                         onCancel={this.closeModal}
                     >
                         {airports[this.state.details].delay
-                            ? airports[this.state.details].delays.map(({type, reason }, index) => {
+                            ? 
+                            
+                            airports[this.state.details].delays.map(({type, reason }, index) => {
                                 return (
                                     <div key={index}>
                                         {type && <p>Type: {type}</p>}
                                         {reason && <p>Reason: {reason}</p>}
-                                        <TSAScreeningEstimate airportInitials={ this.state.details } /> 
+
                                     </div>
                                 )
                             })
+                                                        
                             : <div>
                                 <p>No reported delays.</p>
-                                <TSAScreeningEstimate airportInitials={ this.state.details } /> 
-                            </div> }
-
+                                
+                             </div> }
+                        <TSAScreeningEstimate airportInitials={ this.state.details } /> 
                     </Modal>
                     : null
                 }
